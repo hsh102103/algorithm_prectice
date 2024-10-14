@@ -14,21 +14,18 @@ public class Main {
             String s2 = sc.next();
 
             for (int i = 0; i < s1.length(); i++) {
-                arr[s1.charAt(i)-'a']++;
+                arr[s1.charAt(i) - 'a']++;
             }
             for (int i = 0; i < s2.length(); i++) {
-                arr[s2.charAt(i)-'a']--;
+                arr[s2.charAt(i) - 'a']--;
             }
             for (int i = 0; i < arr.length; i++) {
-                if(arr[i] != 0){
+                if (arr[i] != 0) {
                     flag = false;
                     break;
                 }
             }
-            if(flag)
-                System.out.println("Possible");
-            else
-                System.out.println("Impossible");
+            System.out.println(flag ? "Possible" : "Impossible");
         }
 
     }
