@@ -1,61 +1,71 @@
-import java.util.Scanner;
+import java.io.*;
 
 public class Main {
-    static int[] dr = {-1,0,1,0};
-    static int[] dc = {0,1,0,-1};
     static int[][] map;
     static int N;
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    static int targetNum;
 
-        N = sc.nextInt();
-        int targetNum = sc.nextInt();
-        int r = N/2;
-        int c = N/2;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
+        N = Integer.parseInt(br.readLine());
+        targetNum = Integer.parseInt(br.readLine());
+
+        int r  = N / 2;
+        int c  = N / 2;
+        tr = r+1;
+        tc = c+1;
 
         map = new int[N][N];
-
         map[r][c] = 1;
-        search(r,c);
-
-        for(int i=0;i<N;i++){
-            for(int j=0;j<N;j++){
-                System.out.print(map[i][j]+" ");
-            }
-            System.out.println();
-        }
+        search(r, c);
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if(map[i][j] == targetNum){
-                    System.out.println((i+1) +" "+(j+1));
-                    return;
-                }
+                sb.append(map[i][j]).append(" ");
             }
+            sb.append("\n");
         }
+        sb.append(tr).append(" ").append(tc);
+        System.out.println(sb);
     }
-    static int num =2;
 
-    static void search(int r, int c){
+    static int tr;
+    static int tc;
+
+    static void search(int r, int c) {
+        int insertNum = 2;
+        int[] dr = {-1, 0, 1, 0};
+        int[] dc = {0, 1, 0, -1};
         int cnt = 0;
         int d = 0;
-        while(cnt != 4){
+        while (cnt++ < 2) { // 새 방향이 벽이고, 원래방향도 벽이면 끝
             int nr = dr[d % 4] + r;
             int nc = dc[d % 4] + c;
-            if (isNotRange(nr, nc) || map[nr][nc] != 0) {
-                d--;
-                cnt++;
-                continue;
+
+            if (isNotRange(nr, nc) || map[nr][nc] != 0) d--;
+            else {
+                isTarget(insertNum, nr, nc);
+                map[nr][nc] = insertNum++;
+                cnt = 0;
+                r = nr;
+                c = nc;
+                d++;
             }
-            map[nr][nc] = num++;
-            cnt=0;
-            r=nr;
-            c=nc;
-            d++;
         }
     }
-    static boolean isNotRange(int r, int c){
-        return r>=N || c>=N || r<0 || c<0;
+
+    static void isTarget(int num, int r, int c) {
+        if (num == targetNum) {
+            tr = r + 1;
+            tc = c + 1;
+        }
+    }
+
+    static boolean isNotRange(int r, int c) {
+        return r >= N || c >= N || r < 0 || c < 0;
     }
 }
+
 
