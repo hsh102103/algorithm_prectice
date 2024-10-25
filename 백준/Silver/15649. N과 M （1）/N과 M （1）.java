@@ -1,47 +1,40 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
+    static StringBuilder sb = new StringBuilder();
+    static int N, M;
     static boolean[] marked;
-    static StringBuilder sb;
+    static int[] arr;
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken()); // 숫자 갯수
-        int R = Integer.parseInt(st.nextToken()); // 한줄에 보여줄 갯수
-        int[] arr = new int[R];
-        sb = new StringBuilder();
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        N = sc.nextInt();
+        M = sc.nextInt();
+        arr = new int[M];
         marked = new boolean[N + 1];
 
-        permutation(0, N, R, arr);
-        System.out.println(sb.toString());
+        recur(0);
+
+        System.out.println(sb);
     }
 
-    private static void permutation(int idx, int N, int R, int[] arr) {
-        if (idx == R) {
-            print(R, arr);
+    static void recur(int size) {
+        if (size == M) {
+            for (int i = 0; i < M; i++) {
+                sb.append(arr[i]).append(" ");
+            }
+            sb.append("\n");
             return;
         }
 
         for (int i = 1; i <= N; i++) {
             if (marked[i]) continue;
+            arr[size] = i;
             marked[i] = true;
-            arr[idx] = i;
-            permutation(idx + 1, N, R, arr);
+            recur(size + 1);
             marked[i] = false;
-
         }
-    }
-
-    static void print(int R, int[] arr) {
-        for (int i = 0; i < R; i++) {
-            sb.append(arr[i] + " ");
-        }
-        sb.append("\n");
     }
 }
 
