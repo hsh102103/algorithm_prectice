@@ -1,16 +1,20 @@
 import java.util.*;
+import java.io.*;
 
 public class Main {
     static Object[] sortedArr;
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-
-        int N = sc.nextInt();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int N = Integer.parseInt(st.nextToken());
         int[] initArr = new int[N];
         Set<Integer> set = new HashSet<>();
+        
+        st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            initArr[i] = sc.nextInt();
+            initArr[i] = Integer.parseInt(st.nextToken());
             set.add(initArr[i]);
         }
         sortedArr = set.toArray();
